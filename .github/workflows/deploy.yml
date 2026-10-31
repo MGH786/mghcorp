@@ -15,10 +15,17 @@ jobs:
         run: sudo apt-get update && sudo apt-get install -y lftp
 
       - name: Deploy to OVH via lftp
+        env:
+          FTP_USER: ${{ secrets.FTP_USERNAME }}
+          FTP_PASS: ${{ secrets.FTP_PASSWORD }}
+          FTP_HOST: ${{ secrets.FTP_SERVER }}
         run: |
-          lftp -u ${{ secrets.FTP_USERNAME }},${{ secrets.FTP_PASSWORD }} ftp.cluster129.hosting.ovh.net <<EOF
+          echo "Connexion à $FTP_HOST avec user $FTP_USER"
+          lftp -u "$FTP_USER","$FTP_PASS" $FTP_HOST <<EOF
           set ftp:ssl-allow no
           set ftp:passive-mode on
-          mirror -R -v -e ./ www/ --exclude-glob .git* --exclude-glob .github/* --exclude-glob README.md
+          set net:timeout 30
+          ls
+          mirror -R -v -e ./ www/ --exclude-glob .git* --exclude-glob .github/* --exclude-glob README.md --exclude-glob .gitignore
           bye
           EOF
