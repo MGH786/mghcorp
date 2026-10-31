@@ -10,22 +10,19 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-
       - name: Install lftp
         run: sudo apt-get update && sudo apt-get install -y lftp
-
       - name: Deploy to OVH via lftp
         env:
           FTP_USER: ${{ secrets.FTP_USERNAME }}
           FTP_PASS: ${{ secrets.FTP_PASSWORD }}
           FTP_HOST: ${{ secrets.FTP_SERVER }}
         run: |
-          echo "Connexion à $FTP_HOST avec user $FTP_USER"
-          lftp -u "$FTP_USER","$FTP_PASS" $FTP_HOST <<EOF
-          set ftp:ssl-allow no
+          lftp -d -u "$FTP_USER","$FTP_PASS" $FTP_HOST -e "
+          set ftp:ssl-allow yes
+          set ssl:verify-certificate no
           set ftp:passive-mode on
-          set net:timeout 30
           ls
-          mirror -R -v -e ./ www/ --exclude-glob .git* --exclude-glob .github/* --exclude-glob README.md --exclude-glob .gitignore
+          mirror -R -v -e ./ www/ --exclude-glob .git* --exclude-glob .github/* --exclude-glob README.md
           bye
-          EOF
+          "
