@@ -10,15 +10,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Deploy to OVH via FTP
-        uses: appleboy/ftp-action@master
-        with:
-          server: ftp.cluster129.hosting.ovh.net
-          username: ${{ secrets.FTP_USERNAME }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          port: 21
-          local: ./
-          remote: www/
-          exclude: |
-            .git
-            .【entity-github¦canonical_name=GitHub】
+
+      - name: Install lftp
+        run: sudo apt-get update && sudo apt-get install -y lftp
+
+      - name: Deploy to OVH via lftp
+        run: |
+          lftp -u ${{ secrets.FTP_USERNAME }},${{ secrets.FTP_PASSWORD }} ftp.cluster129.hosting.ovh.net <<EOF
+          set ftp:ssl-allow no
+          set ftp:passive-mode on
+          mirror -R -v -e ./ www/ --exclude-glob .git* --exclude-glob .github/* --exclude-glob README.md
+          bye
+          EOF
