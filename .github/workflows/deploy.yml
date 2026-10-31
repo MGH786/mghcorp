@@ -10,18 +10,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Deploy to OVH with FTPS
+      - name: Deploy to OVH
         uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          protocol: ftps
           port: 21
-          security: loose
           local-dir: ./
           server-dir: www/
           exclude: |
             **/.git*
-            **/.【entity-github¦canonical_name=GitHub】/**
-            **/README.md
+            **/.github/**
