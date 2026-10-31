@@ -10,11 +10,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Deploy via FTP to OVH
-        uses: sebastianbiallas/ftp-action@v2.0
+      - name: Deploy to OVH via FTP
+        uses: appleboy/ftp-action@master
         with:
-          url: ftp://ftp.cluster129.hosting.ovh.net/www/
-          user: ${{ secrets.FTP_USERNAME }}
+          server: ftp.cluster129.hosting.ovh.net
+          username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          localDir: ./
-          remoteDir: ./
+          port: 21
+          local: ./
+          remote: www/
+          exclude: |
+            .git
+            .【entity-github¦canonical_name=GitHub】
