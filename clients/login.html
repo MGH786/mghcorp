@@ -17,7 +17,6 @@ input{width:100%;padding:12px;margin:8px 0;border:1px solid #e2e8f0;border-radiu
 <div class="demo">
 <strong>Comptes de démo (clique pour remplir):</strong>
 <button onclick="fill('rkcorp2026','RkCorp-Nov26!')">CLIENT RKCorp: rkcorp2026 / RkCorp-Nov26!</button>
-<button onclick="fill('fitnesstorm2026','Fit-2026!')">CLIENT Fitnesstorm: fitnesstorm2026 / Fit-2026!</button>
 <button onclick="fill('mghcorp','MGH-Admin2026!')">ADMIN MGHCorp: mghcorp / MGH-Admin2026!</button>
 </div>
 </div></div>
@@ -26,8 +25,6 @@ function initDB(){
  if(!localStorage.getItem('mgh_clients_db')){
   const db=[
    {id:'rkcorp2026', pass:'RkCorp-Nov26!', entreprise:'RKCorp', siren:'', formule:'Complet Annuel', prixMensuel:400, prixAnnuel:4800, dateDebut:'2026-11-04', acces:true, statut:'Actif'},
-   {id:'fitnesstorm2026', pass:'Fit-2026!', entreprise:'Fitnesstorm', siren:'', formule:'Standard', prixMensuel:350, prixAnnuel:4200, dateDebut:'2026-10-15', acces:true, statut:'Actif'},
-   {id:'dupont2026', pass:'Dup-2026!', entreprise:'Dupont SAS', siren:'', formule:'Essentiel', prixMensuel:220, prixAnnuel:2640, dateDebut:'2026-11-01', acces:false, statut:'En attente accès'},
    {id:'mghcorp', pass:'MGH-Admin2026!', entreprise:'MGHCorp (Admin)', role:'admin'}
   ];
   localStorage.setItem('mgh_clients_db', JSON.stringify(db));
