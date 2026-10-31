@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Admin - MGHCorp</title>
+<style>body{font-family:Inter,sans-serif;background:#f8fafc;margin:0}.container{max-width:1100px;margin:0 auto;padding:24px}
+.card{background:white;border:1px solid #e2e8f0;border-radius:12px;padding:20px;margin-bottom:16px}
+table{width:100%;border-collapse:collapse;font-size:13px}th,td{border:1px solid #e2e8f0;padding:8px;text-align:left}th{background:#f1f5f9}
+.btn{padding:8px 14px;border-radius:8px;border:none;cursor:pointer;font-weight:600}.btn-primary{background:#2563eb;color:white}.btn-outline{background:white;border:1px solid #e2e8f0}
+input,select{padding:8px;border:1px solid #e2e8f0;border-radius:6px;margin:4px} .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.stat{font-size:28px;font-weight:800} .badge{padding:2px 8px;border-radius:999px;font-size:11px}.ok{background:#dcfce7;color:#166534}.wait{background:#fef3c7;color:#92400e}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.4);display:none;align-items:center;justify-content:center}.modal>div{background:white;padding:24px;border-radius:12px;max-width:500px;width:90%}
+</style></head><body>
+<div class="container">
+<div style="display:flex;justify-content:space-between;align-items:center"><h1>Admin MGHCorp - Portail Multi-Clients</h1><button class="btn btn-outline" onclick="logout()">Déconnexion</button></div>
+<div class="grid">
+<div class="card"><div>Clients actifs</div><div class="stat" id="nbClients">-</div></div>
+<div class="card"><div>CA Mensuel</div><div class="stat" id="caMensuel">-</div></div>
+<div class="card"><div>CA Annuel projeté</div><div class="stat" id="caAnnuel">-</div></div>
+<div class="card"><div>Sans accès</div><div class="stat" id="sansAcces">-</div></div>
+</div>
+<div class="card">
+<div style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px"><h2>Liste clients</h2><div><button class="btn btn-primary" onclick="openModal()">+ Ajouter un client (30s)</button> <button class="btn btn-outline" onclick="exportCSV()">Export CSV</button></div></div>
+<table id="tbl"><thead><tr><th>ID / MDP</th><th>Entreprise</th><th>Formule</th><th>Mensuel</th><th>Annuel</th><th>Début</th><th>Accès</th><th>Statut</th><th>Actions</th></tr></thead><tbody></tbody></table>
+</div>
+<div class="card"><h3>Comment ça marche ?</h3><p style="font-size:13px;color:#64748b">1. Clique "Ajouter un client" 2. Nom + formule 3. ID et MDP auto-générés 4. Transmets au client login: mghcorp.fr/clients/login.html - Son espace est créé avec planning (sans lun 2 nov), facture modèle 400€ HT=4800€/an plafonné, clause accès réseaux.</p></div>
+</div>
+<div class="modal" id="modal"><div>
+<h3>Nouveau client</h3>
+<input id="ent" placeholder="Entreprise (ex: Dupont SAS)" style="width:100%"><br>
+<input id="siren" placeholder="SIREN (optionnel)" style="width:100%"><br>
+<input id="contact" placeholder="Email contact" style="width:100%"><br>
+<select id="formule" style="width:100%"><option value="Essentiel">Essentiel - 220€/mois</option><option value="Standard">Standard - 350€/mois</option><option value="Complet Mensuel">Complet Mensuel - 490€/mois</option><option value="Complet Annuel" selected>Complet Annuel - 400€/mois (4800€/an plafonné 5000€)</option></select><br>
+<input id="date" type="date" value="2026-11-04" style="width:100%"><br>
+<label><input type="checkbox" id="acces"> Accès réseaux déjà fournis</label><br><br>
+<div style="display:flex;gap:8px"><button class="btn btn-primary" onclick="addClient()">Créer</button><button class="btn btn-outline" onclick="closeModal()">Annuler</button></div>
+</div></div>
+<script>
+function getDB(){ return JSON.parse(localStorage.getItem('mgh_clients_db')||'[]'); }
+function setDB(db){ localStorage.setItem('mgh_clients_db', JSON.stringify(db)); render(); }
+function render(){
+ const db=getDB().filter(c=>c.role!=='admin' && c.id!=='mghcorp');
+ const tbody=document.querySelector('#tbl tbody'); tbody.innerHTML='';
+ let caM=0, caA=0, sans=0;
+ db.forEach(c=>{
+  caM+=c.prixMensuel||0; caA+=c.prixAnnuel||0; if(!c.acces) sans++;
+  const tr=document.createElement('tr');
+  tr.innerHTML=`<td><strong>${c.id}</strong><br><span style="font-size:11px;color:#64748b">${c.pass}</span></td><td>${c.entreprise}<br><span style="font-size:11px">${c.siren||''}</span></td><td>${c.formule}</td><td>${c.prixMensuel}€</td><td>${c.prixAnnuel}€</td><td>${c.dateDebut}</td><td>${c.acces?'<span class="badge ok">Oui</span>':'<span class="badge wait">Non</span>'}</td><td>${c.statut}</td><td><button onclick="viewClient('${c.id}')">Voir</button> <button onclick="delClient('${c.id}')">Suppr</button></td>`;
+  tbody.appendChild(tr);
+ });
+ document.getElementById('nbClients').innerText=db.length;
+ document.getElementById('caMensuel').innerText=caM+'€';
+ document.getElementById('caAnnuel').innerText=caA+'€';
+ document.getElementById('sansAcces').innerText=sans;
+}
+function openModal(){ document.getElementById('modal').style.display='flex'; }
+function closeModal(){ document.getElementById('modal').style.display='none'; }
+function addClient(){
+ const ent=document.getElementById('ent').value.trim(); if(!ent){ alert('Nom entreprise obligatoire'); return; }
+ const formule=document.getElementById('formule').value;
+ let prixM=220, prixA=2640;
+ if(formule==='Standard'){ prixM=350; prixA=4200; } if(formule==='Complet Mensuel'){ prixM=490; prixA=5880; } if(formule==='Complet Annuel'){ prixM=400; prixA=4800; }
+ const idBase=ent.toLowerCase().replace(/[^a-z0-9]/g,'').substring(0,8)+'2026';
+ const pass=ent.substring(0,3).charAt(0).toUpperCase()+ent.substring(0,3).slice(1).toLowerCase()+'-'+Math.floor(1000+Math.random()*9000)+'!';
+ const db=getDB();
+ db.push({id:idBase, pass:pass, entreprise:ent, siren:document.getElementById('siren').value, contact:document.getElementById('contact').value, formule: formule, prixMensuel:prixM, prixAnnuel:prixA, dateDebut:document.getElementById('date').value, acces:document.getElementById('acces').checked, statut: document.getElementById('acces').checked?'Actif':'En attente accès'});
+ setDB(db); closeModal();
+ alert('Client créé !\nID: '+idBase+'\nMDP: '+pass+'\nLien: /clients/login.html');
+}
+function delClient(id){ if(confirm('Supprimer '+id+' ?')){ let db=getDB(); db=db.filter(c=>c.id!==id); setDB(db); } }
+function viewClient(id){ localStorage.setItem('mgh_current_user', JSON.stringify(getDB().find(c=>c.id===id))); location.href='client.html?id='+encodeURIComponent(id); }
+function exportCSV(){
+ const db=getDB(); let csv='ID,Entreprise,Formule,Mensuel,Annuel,Date,Acces,Statut\n';
+ db.forEach(c=>{ csv+=`${c.id},${c.entreprise},${c.formule},${c.prixMensuel},${c.prixAnnuel},${c.dateDebut},${c.acces},${c.statut}\n`; });
+ const blob=new Blob([csv],{type:'text/csv'}); const url=URL.createObjectURL(blob); const a=document.createElement('a'); a.href=url; a.download='clients_mghcorp.csv'; a.click();
+}
+function logout(){ localStorage.removeItem('mgh_current_user'); location.href='login.html'; }
+render();
+</script>
+</body></html>

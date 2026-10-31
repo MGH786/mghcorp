@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>mghcorp – Visibilité sur les réseaux sociaux pour les entreprises</title>
+<meta name="description" content="mghcorp aide les entreprises à développer leur visibilité sur les réseaux sociaux : stratégie, contenus, publication et suivi avec un seul interlocuteur.">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Familjen+Grotesk:wght@500;700&display=swap">
+<style>
+:root{--bg:#f4f6fb;--sf:#fff;--ink:#0f1a38;--mut:#566079;--ln:#dde2ee;--ac:#0a8f7e;--onac:#fff;--sun:#ffc857;--nv:#0f1a38;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0b1226;--sf:#131c36;--ink:#eef1f8;--mut:#a2abc2;--ln:#243050;--ac:#37d1b8;--onac:#0b1226;--nv:#1b2850}}
+:root[data-theme="dark"]{--bg:#0b1226;--sf:#131c36;--ink:#eef1f8;--mut:#a2abc2;--ln:#243050;--ac:#37d1b8;--onac:#0b1226;--nv:#1b2850}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--ink);font:17px/1.65 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+h1,h2,h3,.brand{font-family:"Familjen Grotesk",system-ui,sans-serif;line-height:1.1;letter-spacing:-.02em;margin:0}
+a{color:inherit}
+.w{max-width:1040px;margin:0 auto;padding:0 22px}
+header .w{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-top:18px;padding-bottom:18px}
+.brand{display:flex;align-items:center;gap:10px;font-size:24px;font-weight:700;text-decoration:none}
+.brand svg{width:40px;height:40px}.brand b{color:var(--ac);font-weight:500}
+nav{display:flex;gap:22px;font-size:15px}nav a{text-decoration:none;color:var(--mut)}nav a:hover{color:var(--ink)}
+.btn{display:inline-block;background:var(--ac);color:var(--onac);font-weight:600;text-decoration:none;padding:13px 22px;border-radius:12px;border:0;font:600 16px/1 system-ui,sans-serif;cursor:pointer}
+.btn.o{background:none;color:var(--ink);border:1.5px solid var(--ln)}
+:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
+.hero{padding:64px 0 72px}
+.hero h1{font-size:clamp(38px,7vw,68px);max-width:14ch}
+.hero p{max-width:56ch;color:var(--mut);font-size:19px;margin:22px 0 30px}
+.chip{display:inline-flex;gap:10px;align-items:center;background:var(--sf);border:1px solid var(--ln);border-radius:999px;padding:8px 16px 8px 10px;font-size:14px;margin-bottom:26px}
+.chip i{width:10px;height:10px;border-radius:50%;background:var(--sun);display:block}
+section{padding:68px 0;border-top:1px solid var(--ln)}
+h2{font-size:clamp(28px,4.5vw,40px);margin-bottom:12px}
+.lead{color:var(--mut);max-width:60ch;margin:0 0 36px}
+.say{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+.say p{margin:0;padding-left:16px;border-left:4px solid var(--sun);font-family:"Familjen Grotesk",system-ui,sans-serif;font-size:21px;line-height:1.3}
+.offers{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(270px,1fr))}
+.offer{background:var(--sf);border:1px solid var(--ln);border-radius:18px;padding:26px;display:flex;flex-direction:column}
+.offer.m{border:2px solid var(--ac)}
+.tag{font-size:14px;color:var(--ac);font-weight:600}
+.offer h3{font-size:26px;margin:4px 0 6px}.offer .t{color:var(--mut);margin:0 0 16px}
+.offer ul{padding-left:20px;margin:0 0 22px;flex:1}.offer li{margin-bottom:8px}
+.offer .p{font-weight:600;margin:0 0 14px}
+.steps{display:grid;gap:18px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));counter-reset:s}
+.steps div{counter-increment:s;padding-top:14px;border-top:3px solid var(--ac)}
+.steps div::before{content:counter(s) ".";font-family:"Familjen Grotesk",system-ui,sans-serif;font-weight:700;font-size:22px;color:var(--ac)}
+.steps h3{font-size:21px;margin:4px 0 6px}.steps p{margin:0;color:var(--mut);font-size:16px}
+.band{background:var(--nv);color:#fff;border-radius:20px;padding:34px;display:grid;gap:10px}
+.band p{margin:0;max-width:62ch;color:#cfd6ea}.band h2{color:#fff}
+details{background:var(--sf);border:1px solid var(--ln);border-radius:14px;padding:16px 20px;margin-bottom:10px}
+summary{font-weight:600;cursor:pointer}details p{margin:10px 0 0;color:var(--mut)}
+form{display:grid;gap:14px;max-width:620px}
+label{font-size:15px;font-weight:600;display:grid;gap:6px}
+input,select,textarea{font:inherit;color:var(--ink);background:var(--sf);border:1.5px solid var(--ln);border-radius:10px;padding:12px}
+footer{border-top:1px solid var(--ln);padding:30px 0;color:var(--mut);font-size:15px}
+footer .w{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center}
+.ab{display:grid;gap:36px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));align-items:start}.ab p{margin:0 0 16px;max-width:60ch}.ab h2{margin-bottom:18px}.how{background:var(--sf);border:1px solid var(--ln);border-radius:18px;padding:22px 24px}.how h3{font-size:20px;margin:0 0 14px}.how p{margin:0 0 12px;color:var(--mut);font-size:16px}.how p:last-child{margin:0}.how b{color:var(--ink)}.p small{font-weight:400;color:var(--mut);font-size:15px}
+@media (max-width:640px){nav{display:none}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="lg" viewBox="0 0 96 96"><rect x="4" y="4" width="88" height="88" rx="24" fill="var(--nv)"/><path d="M27 66V45a11 11 0 0 1 22 0v21M49 66V45a11 11 0 0 1 22 0v21" fill="none" stroke="#fff" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/><circle cx="73" cy="23" r="8" fill="#ffc857" stroke="var(--nv)" stroke-width="4"/></symbol></svg>
+<header><div class="w">
+  <a class="brand" href="#" aria-label="mghcorp, accueil"><svg><use href="#lg"/></svg><span>mgh<b>corp</b></span></a>
+  <nav aria-label="Navigation principale"><a href="#a-propos">À propos</a><a href="#offres">Prestations</a><a href="#methode">Méthode</a><a href="#faq">Questions</a><a href="#contact">Contact</a></nav>
+  <a class="btn" href="#contact">Me contacter</a>
+</div></header>
+<main>
+<div class="w hero">
+  <div class="chip"><i></i>Réponse sous 48 h ouvrées</div>
+  <h1>Des réseaux sociaux qui travaillent pour votre entreprise</h1>
+  <p>Je suis Mikael, fondateur de mghcorp. J’aide les entreprises à développer leur visibilité sur les réseaux sociaux : stratégie, contenus, publication et suivi, avec un seul interlocuteur du début à la fin.</p>
+  <a class="btn" href="#offres">Voir les prestations</a> <a class="btn o" href="#contact">Parler de mon projet</a>
+</div>
+
+<section><div class="w">
+  <h2>Vous vous reconnaissez ?</h2>
+  <p class="lead">Ce que j’entends le plus souvent de la part des dirigeants et des équipes qui gèrent leurs réseaux eux-mêmes.</p>
+  <div class="say">
+    <p>« Je publie quand j’ai le temps, donc rarement. »</p>
+    <p>« Mes publications ne ressemblent pas à mon entreprise. »</p>
+    <p>« Je ne sais pas ce qui fonctionne vraiment. »</p>
+  </div>
+</div></section>
+
+<section id="a-propos"><div class="w ab">
+  <div>
+    <h2>Bonjour, je suis Mikael</h2>
+    <p>Je suis le fondateur de mghcorp. Je travaille seul, et c’est un choix : la personne qui vous écoute au premier échange est celle qui écrit, programme et suit vos publications. Rien ne se perd entre deux équipes, et vous savez toujours à qui parler.</p>
+    <p>Je dirige aussi ma propre marque de matériel de fitness, FITNESSTORM. Cela me met chaque jour à la place de mes clients : trouver des clients, présenter une offre simplement et rester visible sans y passer toutes ses journées.</p>
+    <p>Je crois que peu de réseaux, bien tenus, valent mieux qu’une présence partout et nulle part. Je préfère un calendrier réaliste que vous tenez dans la durée à une promesse de croissance que personne ne peut garantir.</p>
+    <a class="btn" href="#contact">Faisons connaissance</a>
+  </div>
+  <div class="how">
+    <h3>Ma façon de travailler</h3>
+    <p><b>Franchise.</b> Si une idée ne sert pas votre objectif, je vous le dis et je propose mieux.</p>
+    <p><b>Régularité.</b> Un calendrier clair, des contenus livrés à la date prévue.</p>
+    <p><b>Transparence.</b> Un bilan mensuel honnête, avec ce qui a marché et ce qui n’a pas marché.</p>
+  </div>
+</div></section>
+
+<section id="offres"><div class="w">
+  <h2>Trois façons de travailler ensemble</h2>
+  <p class="lead">Les tarifs ci-dessous sont indicatifs. Le devis final dépend du nombre de réseaux, du volume de contenus et de vos besoins, sans frais cachés.</p>
+  <div class="offers">
+    <article class="offer">
+      <span class="tag">Prestation ponctuelle</span><h3>Audit et stratégie</h3>
+      <p class="t">Poser les bases avant de publier.</p>
+      <ul><li>Audit de vos comptes publics et de votre environnement</li><li>Positionnement et ligne éditoriale</li><li>Calendrier éditorial du premier mois</li><li>Document de recommandations et visio de restitution</li></ul>
+      <p class="p">À partir de 390 €<small> · une fois</small></p><a class="btn o" href="#contact" data-offer="Audit et stratégie">Demander un devis</a>
+    </article>
+    <article class="offer m">
+      <span class="tag">Abonnement mensuel</span><h3>Création et publication</h3>
+      <p class="t">Des contenus réguliers, sans que vous ayez à y penser.</p>
+      <ul><li>Calendrier éditorial mensuel</li><li>Rédaction et visuels : posts, carrousels, stories selon le réseau</li><li>Programmation sur 1 à 2 réseaux</li><li>Validation par vos soins avant chaque publication</li><li>Bilan mensuel</li></ul>
+      <p class="p">À partir de 490 €<small> · par mois</small></p><a class="btn" href="#contact" data-offer="Création et publication">Demander un devis</a>
+    </article>
+    <article class="offer">
+      <span class="tag">Abonnement mensuel</span><h3>Gestion complète</h3>
+      <p class="t">Une présence suivie de bout en bout.</p>
+      <ul><li>Tout ce qui est inclus dans Création et publication</li><li>Animation de la communauté : réponses et modération</li><li>Veille sectorielle</li><li>Jusqu’à 3 réseaux</li><li>Rapport d’indicateurs et point mensuel en visio</li></ul>
+      <p class="p">À partir de 890 €<small> · par mois</small></p><a class="btn o" href="#contact" data-offer="Gestion complète">Demander un devis</a>
+    </article>
+  </div>
+</div></section>
+
+<section id="methode"><div class="w">
+  <h2>Comment se passe une collaboration</h2>
+  <p class="lead">Quatre étapes, toujours dans le même ordre.</p>
+  <div class="steps">
+    <div><h3>Écoute</h3><p>Un premier échange pour comprendre votre activité, vos objectifs et votre public.</p></div>
+    <div><h3>Stratégie</h3><p>Positionnement, réseaux à privilégier et calendrier éditorial, validés avec vous.</p></div>
+    <div><h3>Création et validation</h3><p>Je prépare les contenus. Rien n’est publié sans votre accord.</p></div>
+    <div><h3>Suivi et bilan</h3><p>Chaque mois, un bilan clair et des ajustements pour le mois suivant.</p></div>
+  </div>
+</div></section>
+
+<section><div class="w"><div class="band">
+  <h2>Un espace client pour suivre l’avancement</h2>
+  <p>Chaque client reçoit une page privée avec son planning du mois, les contenus à valider et les prochaines étapes. Le lien vous est transmis à la signature et reste confidentiel.</p>
+</div></div></section>
+
+<section id="faq"><div class="w">
+  <h2>Questions fréquentes</h2><p class="lead"></p>
+  <details><summary>Puis-je valider les contenus avant publication ?</summary><p>Oui. Je vous envoie les contenus à l’avance et rien n’est publié sans votre accord.</p></details>
+  <details><summary>Dois-je vous donner mes mots de passe ?</summary><p>Non. Vous m’ajoutez avec un rôle sur vos pages ou sur un outil de programmation, selon le réseau. Vous gardez le contrôle et pouvez retirer l’accès à tout moment.</p></details>
+  <details><summary>Quand verrai-je des résultats ?</summary><p>La visibilité se construit dans la durée : comptez plusieurs mois de publication régulière avant de juger. Je ne promets pas de chiffres. Je m’engage sur la régularité, la qualité des contenus et un bilan honnête chaque mois.</p></details>
+  <details><summary>Sur quels réseaux travaillez-vous ?</summary><p>LinkedIn, Instagram et Facebook principalement. Je vous conseille d’en choisir peu et de les tenir bien, selon votre public.</p></details>
+  <details><summary>Quelle est la durée d’engagement ?</summary><p>Nous la fixons ensemble dans le devis, en fonction de la prestation choisie.</p></details>
+</div></section>
+
+<section id="contact"><div class="w">
+  <h2>Parlons de votre projet</h2>
+  <p class="lead">Dites-moi en quelques lignes ce que vous faites et ce que vous cherchez. Je vous réponds sous 48 h ouvrées. Je n’ai pas besoin d’accès à vos comptes pour cette première prise de contact.</p>
+  <form id="f" novalidate>
+    <label>Prénom<input name="p" required autocomplete="given-name"></label>
+    <label>Entreprise<input name="e" autocomplete="organization"></label>
+    <label>Adresse e-mail<input name="m" type="email" required autocomplete="email"></label>
+    <label>Prestation qui vous intéresse<select name="o" id="o"><option>Je ne sais pas encore</option><option>Audit et stratégie</option><option>Création et publication</option><option>Gestion complète</option></select></label>
+    <label>Votre message<textarea name="t" rows="5" required></textarea></label>
+    <button class="btn" type="submit">Envoyer ma demande</button>
+  </form>
+</div></section>
+</main>
+<footer><div class="w"><a class="brand" href="#" aria-label="mghcorp, haut de page"><svg><use href="#lg"/></svg><span>mgh<b>corp</b></span></a><span>© 2026 mghcorp. Tous droits réservés.</span></div></footer>
+
+<script>
+var FORM = document.getElementById('f');
+var BTN = FORM.querySelector('button[type="submit"]');
+FORM.addEventListener('submit', async function(ev){
+  ev.preventDefault();
+  var fd = new FormData(FORM);
+  var oldText = BTN.textContent;
+  BTN.textContent = 'Envoi en cours...';
+  BTN.disabled = true;
+  try {
+    let res = await fetch('contact.php', { method: 'POST', body: fd });
+    let data = await res.text();
+    if(res.ok && data.indexOf('OK') !== -1){
+      FORM.innerHTML = '<div style="background:#e6f5f1;border:1px solid #0a8f7e;border-radius:14px;padding:20px"><b>Merci ! Votre demande a bien ete envoyee.</b><p style="color:#566079;margin:8px 0 0">Je vous reponds sous 48h.</p></div>';
+      window.scrollTo({top: FORM.offsetTop - 80, behavior: 'smooth'});
+    } else {
+      throw new Error(data);
+    }
+  } catch(e){
+    BTN.textContent = oldText;
+    BTN.disabled = false;
+    alert('Erreur: ' + e.message + ' - Ecrivez a contact@mghcorp.fr');
+  }
+});
+document.querySelectorAll('[data-offer]').forEach(function(a){a.addEventListener('click',function(){var el=document.getElementById('o'); if(el) el.value=a.dataset.offer;});});
+</script>
+
+</body>
+</html>

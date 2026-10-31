@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Login - MGHCorp Clients</title>
+<style>body{font-family:Inter,system-ui;background:#f8fafc;margin:0} .container{max-width:900px;margin:0 auto;padding:24px}
+.login{max-width:420px;margin:60px auto;background:white;padding:32px;border-radius:16px;border:1px solid #e2e8f0;box-shadow:0 4px 20px rgba(0,0,0,.05)}
+input{width:100%;padding:12px;margin:8px 0;border:1px solid #e2e8f0;border-radius:8px} .btn{width:100%;padding:12px;background:#2563eb;color:white;border:none;border-radius:8px;font-weight:700;cursor:pointer;margin-top:12px}
+.demo{margin-top:16px;background:#f1f5f9;padding:12px;border-radius:8px;font-size:12px}
+.demo button{width:100%;text-align:left;padding:8px;background:white;border:1px solid #e2e8f0;border-radius:6px;margin:4px 0;cursor:pointer}
+</style></head><body>
+<div class="container"><div class="login">
+<h2>MGHCorp - Espace Clients</h2>
+<p style="font-size:13px;color:#64748b">Portail sécurisé multi-clients - Identifiant + mot de passe</p>
+<input id="u" placeholder="Identifiant">
+<input id="p" type="password" placeholder="Mot de passe">
+<button class="btn" onclick="doLogin()">Se connecter</button>
+<p id="msg" style="color:#ef4444;font-size:13px;margin-top:8px"></p>
+<div class="demo">
+<strong>Comptes de démo (clique pour remplir):</strong>
+<button onclick="fill('rkcorp2026','RkCorp-Nov26!')">CLIENT RKCorp: rkcorp2026 / RkCorp-Nov26!</button>
+<button onclick="fill('fitnesstorm2026','Fit-2026!')">CLIENT Fitnesstorm: fitnesstorm2026 / Fit-2026!</button>
+<button onclick="fill('mghcorp','MGH-Admin2026!')">ADMIN MGHCorp: mghcorp / MGH-Admin2026!</button>
+</div>
+</div></div>
+<script>
+function initDB(){
+ if(!localStorage.getItem('mgh_clients_db')){
+  const db=[
+   {id:'rkcorp2026', pass:'RkCorp-Nov26!', entreprise:'RKCorp', siren:'', formule:'Complet Annuel', prixMensuel:400, prixAnnuel:4800, dateDebut:'2026-11-04', acces:true, statut:'Actif'},
+   {id:'fitnesstorm2026', pass:'Fit-2026!', entreprise:'Fitnesstorm', siren:'', formule:'Standard', prixMensuel:350, prixAnnuel:4200, dateDebut:'2026-10-15', acces:true, statut:'Actif'},
+   {id:'dupont2026', pass:'Dup-2026!', entreprise:'Dupont SAS', siren:'', formule:'Essentiel', prixMensuel:220, prixAnnuel:2640, dateDebut:'2026-11-01', acces:false, statut:'En attente accès'},
+   {id:'mghcorp', pass:'MGH-Admin2026!', entreprise:'MGHCorp (Admin)', role:'admin'}
+  ];
+  localStorage.setItem('mgh_clients_db', JSON.stringify(db));
+ }
+}
+initDB();
+function fill(u,p){ document.getElementById('u').value=u; document.getElementById('p').value=p; }
+function doLogin(){
+ const u=document.getElementById('u').value.trim();
+ const p=document.getElementById('p').value;
+ const db=JSON.parse(localStorage.getItem('mgh_clients_db')||'[]');
+ const found=db.find(c=>c.id===u && c.pass===p);
+ if(!found){ document.getElementById('msg').innerText='Identifiant ou mot de passe incorrect'; return; }
+ localStorage.setItem('mgh_current_user', JSON.stringify(found));
+ if(found.role==='admin' || found.id==='mghcorp'){ location.href='admin.html'; } else { location.href='client.html?id='+encodeURIComponent(found.id); }
+}
+</script>
+</body></html>

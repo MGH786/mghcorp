@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="fr"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Espace Client - MGHCorp</title>
+<style>body{font-family:Inter,sans-serif;background:#f8fafc;margin:0}.container{max-width:900px;margin:0 auto;padding:20px}
+.card{background:white;border:1px solid #e2e8f0;border-radius:12px;padding:20px;margin-bottom:16px}
+h2{font-size:19px;margin-bottom:10px}table{width:100%;border-collapse:collapse;font-size:13px}th,td{border:1px solid #e2e8f0;padding:8px}th{background:#f1f5f9}
+.badge{display:inline-block;background:#eff6ff;color:#2563eb;padding:3px 10px;border-radius:999px;font-size:11px;font-weight:700}
+.btn{padding:8px 14px;border-radius:8px;border:none;cursor:pointer;font-weight:600}.btn-primary{background:#2563eb;color:white}.btn-outline{background:white;border:1px solid #e2e8f0}
+.facture{background:white;border:2px dashed #e2e8f0;padding:16px;border-radius:10px;font-family:monospace;font-size:12px;white-space:pre-wrap}
+</style></head><body>
+<div class="container">
+<div style="display:flex;justify-content:space-between"><h1 id="welcome">Espace client</h1><button class="btn btn-outline" onclick="logout()">Déconnexion</button></div>
+<div id="content"></div>
+</div>
+<script>
+function getParam(name){ const url=new URL(location.href); return url.searchParams.get(name); }
+function getDB(){ return JSON.parse(localStorage.getItem('mgh_clients_db')||'[]'); }
+function render(){
+ const id=getParam('id') || JSON.parse(localStorage.getItem('mgh_current_user')||'{}').id;
+ if(!id){ location.href='login.html'; return; }
+ const client=getDB().find(c=>c.id===id);
+ if(!client){ location.href='login.html'; return; }
+ document.getElementById('welcome').innerText='Planning de novembre 2026 - '+client.entreprise;
+ const content=document.getElementById('content');
+ content.innerHTML=`
+ <div class="card"><span class="badge">${client.formule}</span> <span class="badge" style="background:#dcfce7;color:#166534">${client.prixMensuel}€ HT/mois = ${client.prixAnnuel}€ TTC/an</span>
+ <p style="font-size:13px;color:#64748b;margin-top:8px">ID: ${client.id} - Début: ${client.dateDebut} - Accès: ${client.acces?'Oui':'Non (en attente)'} - Statut: ${client.statut}</p>
+ <p style="font-size:13px">${client.formule.includes('Annuel')?'Formule annuelle plafonnée sous 5000€ TTC/an – Économie 1080€ vs mensuel 490€ – Engagement 12 mois, préavis 2 mois, paiement le 5 par virement':'Formule mensuelle sans engagement – résiliable avec préavis 15 jours'}</p>
+ </div>
+ <div class="card"><h2>📅 Planning novembre 2026 - avec marge (sans lun 2 nov)</h2>
+ <table><tr><th>Date</th><th>Action</th><th>Qui fait quoi</th></tr>
+ <tr><td>Mar 4 nov</td><td>Lancement & brief</td><td>Vous: accès pages + expertises / Moi: kickoff 30min</td></tr>
+ <tr><td>Mer 5 nov</td><td>Audit existant</td><td>Moi: audit LinkedIn/Insta</td></tr>
+ <tr><td>Jeu 6 nov</td><td>Validation stratégie</td><td>Vous: retour / Moi: calendrier</td></tr>
+ <tr><td>Ven 7 nov</td><td>Publi 1</td><td>Moi</td></tr>
+ <tr><td>Lun 10 nov</td><td>Publi 2</td><td>Moi</td></tr>
+ <tr><td>Mer 12 nov</td><td>Publi 3 + Vidéo (vous envoyez rushs, je monte + script)</td><td>Mixte</td></tr>
+ <tr><td>Ven 14-28 nov</td><td>Publis 4-12 + Checklist + Bilan avec buffer 2j</td><td>Moi</td></tr>
+ </table>
+ <p style="font-size:12px;color:#64748b">Buffer: Si validation tarde, publications glissent d'autant. Rien publié sans accord écrit.</p>
+ </div>
+ <div class="card"><h2>🔐 Accès réseaux - Protection mutuelle</h2>
+ <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:13px">
+ <div><strong>Vous fournissez sous 48h:</strong><ul><li>Accès admin via Business Manager LinkedIn/Meta, pas MDP perso</li><li>Si non fourni/révoqué: planning glisse, mensualité due</li></ul></div>
+ <div><strong>Je m'engage:</strong><ul><li>Usage pro uniquement, confidentialité</li><li>Aucune publi sans validation écrite</li><li>Pas de suppression, journal actions, 2FA, restitution sous 7j + attestation</li></ul></div>
+ </div></div>
+ <div class="card"><h2>🧾 Facturation électronique - Modèle conforme ${client.entreprise}</h2>
+ <p style="font-size:13px">Facture via PPF (Portail Public Facturation) - Format Factur-X - Dépôt automatique via Henrri/Tiime</p>
+ <div class="facture">MGHCorp - Mikael Goolam - SIREN 751173998
+TVA non applicable, art. 293 B du CGI
+
+Facture n°: 2026-11-001 - Date: 05/11/2026 - Échéance: 05/11/2026
+Client: ${client.entreprise} - SIREN: ${client.siren||'[À compléter]'}
+Désignation: Abonnement ${client.formule} - Mensualité Novembre 2026
+Total HT: ${client.prixMensuel},00 € - TVA: 0% - Total TTC: ${client.prixMensuel},00 €
+Paiement le 5 par virement - Dépôt PPF - Factur-X
+Pénalités retard: 3x taux légal + indemnité 40€</div>
+ <button class="btn btn-primary" style="margin-top:10px" onclick="window.print()">Télécharger / Imprimer le modèle</button>
+ </div>
+ <div class="card"><h2>📄 Contrat</h2><p style="font-size:13px">Engagement ${client.formule.includes('Annuel')?'12 mois':'mensuel'} - Propriété contenus dès paiement - Résiliation préavis ${client.formule.includes('Annuel')?'2 mois':'15 jours'} - Accès restitués sous 7j</p></div>
+ `;
+}
+function logout(){ localStorage.removeItem('mgh_current_user'); location.href='login.html'; }
+render();
+</script>
+</body></html>
